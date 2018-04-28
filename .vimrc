@@ -68,12 +68,16 @@ Plugin 'vim-scripts/vimprj'
 Plugin 'vim-scripts/indexer.tar.gz'
 
 
+Plugin 'cscope.vim'
 Plugin 'vim-scripts/AutoComplPop'
 
 Plugin 'junegunn/vim-easy-align'
 
 Plugin 'vimscripts-fork/csupport'
 Plugin 'gregsexton/gitv'
+
+Plugin 'tpope/vim-commentary'
+Plugin 'joonty/vim-phpqa'
 
 call vundle#end()
 filetype plugin indent on
@@ -171,7 +175,7 @@ let g:SuperTabDefaultCompletionType = "context"
 
 set tags=tags
 if has("cscope")                                 
-    set csprg=/bin/cscope           
+    set csprg=/usr/local/bin/cscope
     set csto=0                               
     set cst                                  
     set nocsverb                             
@@ -205,7 +209,15 @@ let g:indexer_ctagsCommandLineOptions="--c-kinds=+p --fields=+S"
 
 let g:syntastic_c_include_dirs=["/data/software/php/5.4.45_nts/include/php/main/","/data/software/php/5.4.45_nts/include/php/","/data/software/php/5.4.45_nts/include/php/Zend/","/data/software/php/5.4.45_nts/include/php/TSRM/","/data/software/php/5.4.45_nts/include/php/ext/","/data/software/php/5.4.45_nts/include/php/include/","/data/software/php/5.4.45_nts/include/php/sapi/","/data/src/code-instrument-php/SmartAgent/AgentCore/","/data/src/code-instrument-php/SmartAgent/AgentCore/include/"]
 
-
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 let g:C_MapLeader="'"
+
+
+autocmd FileType php setlocal commentstring=//\ %s
+
+
+let g:phpqa_php_cmd='/usr/local/php5.6/bin/php'
+let g:phpqa_codesniffer_cmd='/data/phpcs/bin/phpcs'
+let g:phpqa_codesniffer_args = '--standard=Zend'
+let g:phpqa_messdetector_cmd='/data/phpmd'
