@@ -78,6 +78,7 @@ Plugin 'gregsexton/gitv'
 
 Plugin 'tpope/vim-commentary'
 Plugin 'joonty/vim-phpqa'
+Plugin 'joonty/vdebug'
 
 call vundle#end()
 filetype plugin indent on
@@ -86,29 +87,21 @@ filetype plugin indent on
 
 let mapleader = ';'
 "quickfix列表
-map <silent><Leader>cn :cn<cr>
-map <silent><Leader>cp :cp<cr>
-map <silent><Leader>cw :cw<cr>
-"标签操作
-map <silent><Leader>q :qall!<cr>
-map <silent><Leader>c :q!<cr>
-map <silent><Leader>w :wall<cr>
+map <silent>,cn :cn<cr>
+map <silent>,cp :cp<cr>
+map <silent>,cw :cw<cr>
 "窗口操作
-map <silent><Leader>h :vertical resize -5<cr>
-map <silent><Leader>j :resize -5<cr>
-map <silent><Leader>k :resize +5<cr>
-map <silent><Leader>l :vertical resize +5<cr>
-map <silent><Leader>F <C-W>L
-map <silent><Leader>D <C-W>K
-map <silent><Leader>S <C-W>J
-map <silent><Leader>A <C-W>H
+map <silent>,F <C-W>L
+map <silent>,D <C-W>K
+map <silent>,S <C-W>J
+map <silent>,A <C-W>H
 "光标移动
-map <silent><Leader>a <C-W>h
-map <silent><Leader>s <C-W>j
-map <silent><Leader>d <C-W>k
-map <silent><Leader>f <C-W>l
-map <silent><Leader>t <C-W>t
-map <silent><Leader>b <C-W>b
+map <silent>,a <C-W>h
+map <silent>,s <C-W>j
+map <silent>,d <C-W>k
+map <silent>,f <C-W>l
+map <silent>,t <C-W>t
+map <silent>,b <C-W>b
 "命令行清行模式
 map <F2> :NERDTreeToggle<CR>
 map <C-D> <Esc>yyp<CR>
@@ -171,11 +164,11 @@ let g:ConqueGdb_Leader='.'
 autocmd FileType c ClangFormatAutoEnable
 
 "supertab
-let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
 set tags=tags
 if has("cscope")                                 
-    set csprg=/usr/local/bin/cscope
+    set csprg=/bin/cscope
     set csto=0                               
     set cst                                  
     set nocsverb                             
@@ -185,23 +178,22 @@ if has("cscope")
     set csverb
     set cspc=5
     set cscopequickfix=c-,d-,e-,g-,i-,s-,t-
-    "set cscopequickfix=s-,g-,d-,c-,t-,e-,f-
 endif   
 
-nmap ,s :cs find s <C-R><C-W><CR><CR> "查找C语言符号，即查找函数名、宏、枚举值等出现的地方
-nmap ,g :cs find g <C-R><C-W><CR><CR> "查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
-nmap ,c :cs find c <C-R><C-W><CR><CR> "查找本函数调用的函数
-nmap ,t :cs find t <C-R><C-W><CR><CR> "查找调用本函数的函数
-nmap ,e :cs find e <C-R><C-W><CR><CR> "查找指定的字符串
-nmap ,f :cs find f <C-R><C-W><CR><CR> "查找egrep模式，相当于egrep功能，但查找速度快多了
-nmap ,i :cs find i ^<C-R><C-F><CR>$<CR> "查找并打开文件，类似vim的find功能
-nmap ,d :cs find d <C-R><C-W><CR><CR> "查找包含本文件的文件
+nmap ,fs :cs find s <C-R><C-W><CR><CR> "查找C语言符号，即查找函数名、宏、枚举值等出现的地方
+nmap ,fg :cs find g <C-R><C-W><CR><CR> "查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
+nmap ,fc :cs find c <C-R><C-W><CR><CR> "查找本函数调用的函数
+nmap ,ft :cs find t <C-R><C-W><CR><CR> "查找调用本函数的函数
+nmap ,fe :cs find e <C-R><C-W><CR><CR> "查找指定的字符串
+nmap ,ff :cs find f <C-R><C-W><CR><CR> "查找egrep模式，相当于egrep功能，但查找速度快多了
+nmap ,fi :cs find i ^<C-R><C-F><CR>$<CR> "查找并打开文件，类似vim的find功能
+nmap ,fd :cs find d <C-R><C-W><CR><CR> "查找包含本文件的文件
 
 "nmap ,r :!/data/src/pattern/install_module.sh<CR>
 nmap ,r :!cd /data/src/php/php-5.4.45/ext/test_file/ && phpize && ./configure && make && make install<CR>
 set tags=tags
-set tags+=/data/src/php/php-5.4.45/tags
 set tags+=~/.vim/systags
+set tags+=~/.vim/vimtags
 let g:completekey='<C-L>'
 
 "indexer
@@ -211,15 +203,13 @@ let g:syntastic_c_include_dirs=["/data/software/php/5.4.45_nts/include/php/main/
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-let g:C_MapLeader="'"
+let g:C_MapLeader=";"
 
 
 autocmd FileType php setlocal commentstring=//\ %s
 
 
-let g:phpqa_php_cmd='/usr/local/php5.6/bin/php'
-" https://github.com/squizlabs/PHP_CodeSniffer
+let g:phpqa_php_cmd='php'
 let g:phpqa_codesniffer_cmd='/data/phpcs/bin/phpcs'
 let g:phpqa_codesniffer_args = '--standard=Zend'
-" http://pear.php.net/package/PHP_CodeSniffer/
 let g:phpqa_messdetector_cmd='/data/phpmd'
