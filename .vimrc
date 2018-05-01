@@ -218,6 +218,8 @@ autocmd FileType php setlocal commentstring=//\ %s
 
 
 let g:phpqa_php_cmd='/usr/local/php5.6/bin/php'
+" https://github.com/squizlabs/PHP_CodeSniffer
 let g:phpqa_codesniffer_cmd='/data/phpcs/bin/phpcs'
 let g:phpqa_codesniffer_args = '--standard=Zend'
+" http://pear.php.net/package/PHP_CodeSniffer/
 let g:phpqa_messdetector_cmd='/data/phpmd'
