@@ -185,8 +185,8 @@ nmap ,fg :cs find g <C-R><C-W><CR><CR> "查找函数、宏、枚举等定义的�
 nmap ,fc :cs find c <C-R><C-W><CR><CR> "查找本函数调用的函数
 nmap ,ft :cs find t <C-R><C-W><CR><CR> "查找调用本函数的函数
 nmap ,fe :cs find e <C-R><C-W><CR><CR> "查找指定的字符串
-nmap ,ff :cs find f <C-R><C-W><CR><CR> "查找egrep模式，相当于egrep功能，但查找速度快多了
-nmap ,fi :cs find i ^<C-R><C-F><CR>$<CR> "查找并打开文件，类似vim的find功能
+nmap ,ff :cs find f <C-R><C-F><CR><CR> "查找egrep模式，相当于egrep功能，但查找速度快多了
+nmap ,fi :cs find i <C-R><C-F><CR><CR> "查找并打开文件，类似vim的find功能
 nmap ,fd :cs find d <C-R><C-W><CR><CR> "查找包含本文件的文件
 
 "nmap ,r :!/data/src/pattern/install_module.sh<CR>
