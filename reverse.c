@@ -22,7 +22,8 @@
 #include <stdio.h>
 #include <string.h>
 
-static void reverse_str( char * str );
+static char *reverse_str( char * str );
+static inline void word_count();
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -33,7 +34,8 @@ static void reverse_str( char * str );
 int main ( int argc, char *argv[] )
 {
     char string[5] = "abcd";
-    reverse_str(string);
+    printf("%s", reverse_str(string));
+    word_count();
     return EXIT_SUCCESS;
 }
 
@@ -44,7 +46,7 @@ int main ( int argc, char *argv[] )
  *  Description:  
  * =====================================================================================
  */
-static void reverse_str ( char *str )
+static char *reverse_str ( char *str )
 {
     int len = strlen(str);
     char ch;
@@ -55,5 +57,31 @@ static void reverse_str ( char *str )
         str[len - step - 1] = str[step];
         str[step] = ch;
     }
-    printf("%s,len=%d\n",str,len);
+    return str;
+}
+
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  word_count
+ *  Description:  get word numbers 
+ * =====================================================================================
+ */
+static inline void word_count ()
+{
+    int count = 0;
+    int in = 0;
+    char ch;
+    while ( (ch = getchar()) != EOF){
+        if ( ch != '\n' && ch != '\t' && ch != ' ' ) {
+            if ( in == 0  ){
+                in = 1;
+                count++;
+            }
+        } else {
+            in = 0;
+        }
+    }
+
+    printf("there are %d words",count);
 }
