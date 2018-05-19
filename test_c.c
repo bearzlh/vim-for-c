@@ -10,28 +10,26 @@
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  YOUR NAME (), 
- *   Organization:  
+ *         Author:  YOUR NAME (),
+ *   Organization:
  *
  * =====================================================================================
  */
-
-
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  main
- *  Description:  test
+/*
+ * ===  FUNCTION
+ * ====================================================================== Name:
+ * main Description:  test
  * =====================================================================================
  */
 int main ( int argc, char *argv[] )
 {
     FILE	*fptr;
-    char	*fptr_file_name = "a.txt";
+    char const	*fptr_file_name = "a.txt";
     char    buff[256];
 
     fptr	= fopen( fptr_file_name, "a+" );
