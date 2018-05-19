@@ -20,6 +20,9 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+
+void test();
+
 /*
  * ===  FUNCTION
  * ====================================================================== Name:
@@ -31,6 +34,8 @@ int main ( int argc, char *argv[] )
     FILE	*fptr;
     char const	*fptr_file_name = "a.txt";
     char    buff[256];
+
+    test();
 
     fptr	= fopen( fptr_file_name, "a+" );
     if ( fptr == NULL ) {
@@ -51,5 +56,11 @@ int main ( int argc, char *argv[] )
     }
 
     return EXIT_SUCCESS;
+}
+
+
+void test()
+{
+    printf("%s\n","aaa");
 }
 
