@@ -58,7 +58,9 @@ int main ( int argc, char *argv[] )
     return EXIT_SUCCESS;
 }
 
-
+/**
+ * [test this is a test]
+ */
 void test()
 {
     printf("%s\n","aaa");
