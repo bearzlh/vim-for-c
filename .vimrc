@@ -1,9 +1,10 @@
 set clipboard^=unnamed
+set wrap
 set hlsearch
 set shortmess=a
 set ic
 set ruler
-set mouse=i
+set mouse=a
 set nu
 set bg=dark
 syntax on
@@ -54,13 +55,15 @@ Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/OmniCppComplete'
 " 参数补全
 Plugin 'mbbill/code_complete'
+
 " 语法检查
-Plugin 'vim-syntastic/syntastic'
+Plugin 'w0rp/ale'
+
+
 " 中文文档
 Plugin 'yianwillis/vimcdoc'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'vim-scripts/Conque-GDB'
-"Plugin 'SpaceVim/cscope.vim'
 
 
 Plugin 'vim-scripts/DfrankUtil'
@@ -77,8 +80,13 @@ Plugin 'vimscripts-fork/csupport'
 Plugin 'gregsexton/gitv'
 
 Plugin 'tpope/vim-commentary'
-Plugin 'joonty/vim-phpqa'
 Plugin 'joonty/vdebug'
+
+Plugin 'dkprice/vim-easygrep'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'bling/vim-bufferline'
+Plugin 'vim-scripts/winmanager'
+Plugin 'bufexplorer.zip'
 
 call vundle#end()
 filetype plugin indent on
@@ -104,9 +112,6 @@ map <silent>,t <C-W>t
 map <silent>,b <C-W>b
 "命令行清行模式
 map <F2> :NERDTreeToggle<CR>
-map <C-D> <Esc>yyp<CR>
-map <C-U> <Esc>d^a
-map <C-K> <Esc>d$i
 
 
 "ctrlp
@@ -116,7 +121,7 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_max_files = 10000
-let g:ctrlp_map = ';z'
+let g:ctrlp_map = ',z'
 let g:ctrlp_max_depth = 40
 let g:ctrlp_show_hidden = 1
 
@@ -125,24 +130,24 @@ let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#bufferline#enabled = 0
 
 "nerdtree
-map <F2> :NERDTreeToggle<CR>
+"map <F2> :NERDTreeToggle<CR>
 
 "taglist
-map <F3> :TlistToggle<CR>
-let Tlist_Auto_Open=0 " Let the tag list open automatically  
-let Tlist_Auto_Update=1 " Update the tag list automatically  
-let Tlist_Compact_Format=1 " Hide help menu  
-let Tlist_Ctags_Cmd='ctags' " Location of ctags  
-let Tlist_Enable_Fold_Column=0 "do show folding tree  
-let Tlist_Process_File_Always=1 " Always process the source file  
-let Tlist_Show_One_File=1 " Only show the tag list of current file  
-let Tlist_Exist_OnlyWindow=1 " If you are the last, kill yourself  
-let Tlist_File_Fold_Auto_Close=0 " Fold closed other trees  
-let Tlist_Sort_Type="name" " Order by name  
-let Tlist_WinWidth=30 " Set the window 40 cols wide.  
-let Tlist_Close_On_Select=1 " Close the list when a item is selected  
-let Tlist_Use_SingleClick=1 "Go To Target By SingleClick  
-let Tlist_Use_Right_Window=1 "在右侧显示
+"map <F3> :TlistToggle<CR>
+"let Tlist_Auto_Open=0 " Let the tag list open automatically  
+"let Tlist_Auto_Update=1 " Update the tag list automatically  
+"let Tlist_Compact_Format=1 " Hide help menu  
+"let Tlist_Ctags_Cmd='ctags' " Location of ctags  
+"let Tlist_Enable_Fold_Column=0 "do show folding tree  
+"let Tlist_Process_File_Always=1 " Always process the source file  
+"let Tlist_Show_One_File=1 " Only show the tag list of current file  
+"let Tlist_Exist_OnlyWindow=1 " If you are the last, kill yourself  
+"let Tlist_File_Fold_Auto_Close=0 " Fold closed other trees  
+"let Tlist_Sort_Type="name" " Order by name  
+"let Tlist_WinWidth=30 " Set the window 40 cols wide.  
+"let Tlist_Close_On_Select=1 " Close the list when a item is selected  
+"let Tlist_Use_SingleClick=1 "Go To Target By SingleClick  
+"let Tlist_Use_Right_Window=1 "在右侧显示
 
 "omini补全设置
 let OmniCpp_NamespaceSearch = 2     " search namespaces in the current buffer   and in included files
@@ -168,7 +173,7 @@ let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
 set tags=tags
 if has("cscope")                                 
-    set csprg=/bin/cscope
+    set csprg=cscope
     set csto=0                               
     set cst                                  
     set nocsverb                             
@@ -189,8 +194,6 @@ nmap ,ff :cs find f <C-R><C-F><CR><CR> "查找egrep模式，相当于egrep功能
 nmap ,fi :cs find i <C-R><C-F><CR><CR> "查找并打开文件，类似vim的find功能
 nmap ,fd :cs find d <C-R><C-W><CR><CR> "查找包含本文件的文件
 
-"nmap ,r :!/data/src/pattern/install_module.sh<CR>
-nmap ,r :!cd /data/src/php/php-5.4.45/ext/test_file/ && phpize && ./configure && make && make install<CR>
 set tags=tags
 set tags+=~/.vim/systags
 set tags+=~/.vim/vimtags
@@ -209,7 +212,33 @@ let g:C_MapLeader=";"
 autocmd FileType php setlocal commentstring=//\ %s
 
 
-let g:phpqa_php_cmd='php'
-let g:phpqa_codesniffer_cmd='/data/phpcs/bin/phpcs'
-let g:phpqa_codesniffer_args = '--standard=Zend'
-let g:phpqa_messdetector_cmd='/data/phpmd'
+let g:EasyGrepRecursive=1
+let g:EasyGrepIgnoreCase=1
+let g:EasyGrepHidden=0
+let g:EasyGrepBinary=0
+let g:EasyGrepFilesToExclude=".git,.idea,cscope.*,tags,vendor"
+let g:EasyGrepWindow=0
+let g:EasyGrepJumpToMatch=1
+let g:EasyGrepInvertWholeWord=1
+let g:EasyGrepPatternType='fixed'
+let g:EasyGrepMode=2
+let g:EasyGrepCommand=1
+
+
+let g:bufferline_active_buffer_left = '>'
+let g:bufferline_active_buffer_right = ''
+let g:bufferline_echo = 0
+let g:bufferline_rotate = 1
+let g:bufferline_fixed_index = 1
+
+
+let g:winManagerWindowLayout='NERDTree,TagList'
+let g:winManagerWidth = 30
+let g:NERDTree_title="[NERDTree]"  
+function! NERDTree_Start()
+    exec 'NERDTree'
+endfunction
+
+function! NERDTree_IsValid()
+    return 1
+endfunction
