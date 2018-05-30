@@ -20,9 +20,9 @@ set fileencoding=utf-8
 set autoread
 set cursorline
 set cursorcolumn
-colorscheme evening
-highlight CursorLine   cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
-highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
+colorscheme morning
+highlight CursorLine   cterm=NONE ctermbg=darkgrey ctermfg=white guibg=NONE guifg=NONE
+highlight CursorColumn cterm=NONE ctermbg=darkgrey ctermfg=white guibg=NONE guifg=NONE
 set noundofile
 set nobackup
 set noswapfile
@@ -39,8 +39,6 @@ Plugin 'VundleVim/Vundle.vim'
 
 " statusline
 Plugin 'vim-airline/vim-airline'
-" show buffer information
-Plugin 'bling/vim-bufferline'
 
 " find with path
 Plugin 'kien/ctrlp.vim'
@@ -103,6 +101,14 @@ Plugin 'cscope.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
+Plugin 'wincent/ferret'
+
+Plugin 'mhinz/vim-startify'
+Plugin 'bling/vim-bufferline'
+
+Plugin 'majutsushi/tagbar'
+Plugin 'ddrscott/vim-window'
+Plugin 'tomasr/molokai'
 
 call vundle#end()
 filetype plugin indent on
@@ -139,7 +145,53 @@ let g:ctrlp_max_depth           = 40
 let g:ctrlp_show_hidden         = 1
 
 " airline
+let g:airline#extensions#ycm#enabled = 1
+let g:airline#extensions#ycm#error_symbol = 'E:'
+let g:airline#extensions#ycm#warning_symbol = 'W:'
+let g:airline#extensions#ale#enabled = 1
+let airline#extensions#ale#error_symbol = 'E:'
+let airline#extensions#ale#warning_symbol = 'W:'
+
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#left_sep = '|'
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline#extensions#fugitiveline#enabled = 1
+let g:airline#extensions#tagbar#flags = 'f'
+let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
+let g:airline#extensions#quickfix#location_text = 'Location'
+let g:airline#extensions#hunks#enabled = 1
+let g:airline#extensions#hunks#non_zero_only = 0
+let g:airline#extensions#hunks#hunk_symbols = ['+', '~', '-']
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+map ,1 :b 1<CR>
+map ,2 :b 2<CR>
+map ,3 :b 3<CR>
+map ,4 :b 4<CR>
+map ,5 :b 5<CR>
+map ,6 :b 6<CR>
+map ,7 :b 7<CR>
+map ,8 :b 8<CR>
+map ,9 :b 9<CR>
+let g:airline#extensions#default#layout = [
+      \ [ 'a', 'b', 'c' ],
+      \ [ 'x', 'y', 'z', 'error', 'warning' ]
+      \ ]
+
 
 "omini补全设置
 let OmniCpp_NamespaceSearch     = 2 " search namespaces in the current buffer   and in included files
@@ -242,3 +294,51 @@ autocmd FileType php        setlocal omnifunc=phpactor#Complete
 let g:phpactorPhpBin = '/usr/local/php7/bin/php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniError = v:true
+
+set viminfo='100,n/root/.vim/files/info/viminfo
+let g:startify_change_to_vcs_root = 1
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
+
+" Unimpaired mapping
+nnoremap ]r :<C-U>call window#rotate(-1 * v:count1)<cr>
+nnoremap [r :<C-U>call window#rotate(1 * v:count1)<cr>
+
+" Improved window rotate to work with all layouts
+nmap <C-w>r ]r
+nmap <C-w><C-r> ]r
+
+" Improve window exchange to work with all layouts
+nnoremap <C-w>x :<C-U>call window#exchange(v:count)<cr>
+nnoremap <C-w><c-x> :<C-U>call window#exchange(v:count)<cr>
+
+" [g]lue windows together.
+"    l = glue to right side
+"    h = glue to left side
+"    j = glue to bottom
+"    k = glue to top
+"
+" `normal! 100zh` scrolls window contents into view since it gets messy when
+" narrower window tries refocuses its cursor.
+nnoremap <C-w>gl :<C-U>call window#join('rightbelow vsplit', v:count) <BAR>normal! 100zh<CR>
+nnoremap <C-w>gh :<C-U>call window#join('leftabove vsplit', v:count)  <BAR>normal! 100zh<CR>
+nnoremap <C-w>gj :<C-U>call window#join('belowright split', v:count)  <BAR>normal! 100zh<CR>
+nnoremap <C-w>gk :<C-U>call window#join('aboveleft split', v:count)   <BAR>normal! 100zh<CR>
+
+" Force a primary window layout.
+" The capital HJKL forces the primary window to a specific direction.
+command! -nargs=* LayoutH call window#layout('ball', 'H', <args>)
+command! -nargs=* LayoutJ call window#layout('vertical ball', 'J', <args>)
+command! -nargs=* LayoutK call window#layout('vertical ball', 'K', <args>)
+command! -nargs=* LayoutL call window#layout('ball', 'L', <args>)
+
+" Map the layout commands to something if that's your style.
+nnoremap <C-w>gH :<C-U>LayoutH v:count<CR>
+nnoremap <C-w>gJ :<C-U>LayoutJ v:count<CR>
+nnoremap <C-w>gK :<C-U>LayoutK v:count<CR>
+nnoremap <C-w>gL :<C-U>LayoutL v:count<CR>
+
+" Improve window only, to split to new tab instead
+nnoremap <C-w>o :call window#only()<cr>
+nnoremap <C-w><c-o> :call window#only()<cr>
+command! -nargs=* BallH call window#layout('ball', 'H', <args>)
