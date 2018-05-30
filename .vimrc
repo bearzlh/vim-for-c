@@ -295,8 +295,27 @@ let g:phpactorPhpBin = '/usr/local/php7/bin/php'
 let g:phpactorBranch = 'master'
 let g:phpactorOmniError = v:true
 
-set viminfo='100,n/root/.vim/files/info/viminfo
+set viminfo='100,n~/.vim/files/info/viminfo
+
+let g:startify_session_autoload = 1
+let g:startify_lists = [
+            \ { 'header': ['   MRU'],            'type': 'files' },
+            \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
+            \ { 'header': ['   Sessions'],       'type': 'sessions' },
+            \ { 'header': [   'Commands'], 'type': 'commands'       },
+            \ ]
+
+let g:startify_commands = [
+            \ {'h': 'h ref'},
+            \ ]
+
 let g:startify_change_to_vcs_root = 1
+let g:startify_skiplist = [
+            \ '/Users/',
+            \ ]
+
+
+
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 
 
