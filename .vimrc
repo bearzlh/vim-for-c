@@ -1,9 +1,10 @@
 set clipboard^=unnamed
+set wrap
 set hlsearch
 set shortmess=a
 set ic
 set ruler
-set mouse=i
+set mouse=a
 set nu
 set bg=dark
 syntax on
@@ -19,10 +20,8 @@ set fileencoding=utf-8
 set autoread
 set cursorline
 set cursorcolumn
-colorscheme evening
-highlight CursorLine   cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
-highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
-"colorscheme evening
+highlight CursorLine   cterm=NONE ctermbg=darkgrey ctermfg=white guibg=NONE guifg=NONE
+highlight CursorColumn cterm=NONE ctermbg=darkgrey ctermfg=white guibg=NONE guifg=NONE
 set noundofile
 set nobackup
 set noswapfile
@@ -36,49 +35,85 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-" 文件查找
-Plugin 'kien/ctrlp.vim'
-" 状态栏
+
+" statusline
 Plugin 'vim-airline/vim-airline'
-" git管理
+
+" find with path
+Plugin 'kien/ctrlp.vim'
+" find & replace with pattern
+Plugin 'dkprice/vim-easygrep'
+" find word or letter
+Plugin 'easymotion/vim-easymotion'
+
+" git branch operation
 Plugin 'tpope/vim-fugitive'
-" git操作
+" git edit operation
 Plugin 'airblade/vim-gitgutter'
-" 目录结构
+" git commit map and check
+Plugin 'gregsexton/gitv'
+
+" window layout
+Plugin 'vim-scripts/winmanager'
+" directory map
 Plugin 'scrooloose/nerdtree'
-" tab键
+
+" tab key complete
 Plugin 'ervandew/supertab'
 " taglist
 Plugin 'vim-scripts/taglist.vim'
-" 函数与类的补全插件
+" function and class complete
 Plugin 'vim-scripts/OmniCppComplete'
-" 参数补全
+" params complete
 Plugin 'mbbill/code_complete'
-" 语法检查
-Plugin 'vim-syntastic/syntastic'
-" 中文文档
+" c stucture complete
+Plugin 'vimscripts-fork/csupport'
+
+Plugin 'Valloric/YouCompleteMe'
+
+" syntaxt
+Plugin 'w0rp/ale'
+
+" doc
 Plugin 'yianwillis/vimcdoc'
+
+" c format
 Plugin 'rhysd/vim-clang-format'
+" lines format
+Plugin 'junegunn/vim-easy-align'
+
+" c debug
 Plugin 'vim-scripts/Conque-GDB'
-"Plugin 'SpaceVim/cscope.vim'
+" php debug(python3)
+Plugin 'joonty/vdebug'
 
-
+" tag file refresh
 Plugin 'vim-scripts/DfrankUtil'
 Plugin 'vim-scripts/vimprj'
 Plugin 'vim-scripts/indexer.tar.gz'
-
-
+" tag jump
 Plugin 'cscope.vim'
-Plugin 'vim-scripts/AutoComplPop'
+" tag pop
+" Plugin 'vim-scripts/AutoComplPop'
 
-Plugin 'junegunn/vim-easy-align'
-
-Plugin 'vimscripts-fork/csupport'
-Plugin 'gregsexton/gitv'
-
+" comment lines
 Plugin 'tpope/vim-commentary'
-Plugin 'joonty/vim-phpqa'
-Plugin 'joonty/vdebug'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
+Plugin 'wincent/ferret'
+
+Plugin 'mhinz/vim-startify'
+Plugin 'bling/vim-bufferline'
+
+Plugin 'majutsushi/tagbar'
+" Plugin 'ddrscott/vim-window'
+Plugin 'tomasr/molokai'
+Plugin 'mattn/emmet-vim'
+
+
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'roxma/nvim-yarp'
+Plugin 'roxma/vim-hug-neovim-rpc'
 
 call vundle#end()
 filetype plugin indent on
@@ -103,72 +138,78 @@ map <silent>,f <C-W>l
 map <silent>,t <C-W>t
 map <silent>,b <C-W>b
 "命令行清行模式
-map <F2> :NERDTreeToggle<CR>
-map <C-D> <Esc>yyp<CR>
-map <C-U> <Esc>d^a
-map <C-K> <Esc>d$i
-
 
 "ctrlp
-set runtimepath^=~/.vim/bundle/ctrlp
-let g:ctrlp_by_filename = 1
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_use_caching = 1
+let g:ctrlp_by_filename         = 1
+let g:ctrlp_working_path_mode   = 'ra'
+let g:ctrlp_use_caching         = 1
 let g:ctrlp_clear_cache_on_exit = 1
-let g:ctrlp_max_files = 10000
-let g:ctrlp_map = ';z'
-let g:ctrlp_max_depth = 40
-let g:ctrlp_show_hidden = 1
+let g:ctrlp_max_files           = 10000
+let g:ctrlp_map                 = ',z'
+let g:ctrlp_max_depth           = 40
+let g:ctrlp_show_hidden         = 1
 
 " airline
+let g:airline#extensions#ycm#enabled = 1
+let g:airline#extensions#ycm#error_symbol = 'E:'
+let g:airline#extensions#ycm#warning_symbol = 'W:'
+let g:airline#extensions#ale#enabled = 1
+let airline#extensions#ale#error_symbol = 'E:'
+let airline#extensions#ale#warning_symbol = 'W:'
+
 let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#bufferline#enabled = 0
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#left_sep = '|'
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 
-"nerdtree
-map <F2> :NERDTreeToggle<CR>
+let g:airline#extensions#fugitiveline#enabled = 1
+let g:airline#extensions#tagbar#flags = 'f'
+let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
+let g:airline#extensions#quickfix#location_text = 'Location'
+let g:airline#extensions#hunks#enabled = 1
+let g:airline#extensions#hunks#non_zero_only = 0
+let g:airline#extensions#hunks#hunk_symbols = ['+', '~', '-']
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+map ,1 :b 1<CR>
+map ,2 :b 2<CR>
+map ,3 :b 3<CR>
+map ,4 :b 4<CR>
+map ,5 :b 5<CR>
+map ,6 :b 6<CR>
+map ,7 :b 7<CR>
+map ,8 :b 8<CR>
+map ,9 :b 9<CR>
+let g:airline#extensions#default#layout = [
+      \ [ 'a', 'b', 'c' ],
+      \ [ 'x', 'y', 'z', 'error', 'warning' ]
+      \ ]
 
-"taglist
-map <F3> :TlistToggle<CR>
-let Tlist_Auto_Open=0 " Let the tag list open automatically  
-let Tlist_Auto_Update=1 " Update the tag list automatically  
-let Tlist_Compact_Format=1 " Hide help menu  
-let Tlist_Ctags_Cmd='ctags' " Location of ctags  
-let Tlist_Enable_Fold_Column=0 "do show folding tree  
-let Tlist_Process_File_Always=1 " Always process the source file  
-let Tlist_Show_One_File=1 " Only show the tag list of current file  
-let Tlist_Exist_OnlyWindow=1 " If you are the last, kill yourself  
-let Tlist_File_Fold_Auto_Close=0 " Fold closed other trees  
-let Tlist_Sort_Type="name" " Order by name  
-let Tlist_WinWidth=30 " Set the window 40 cols wide.  
-let Tlist_Close_On_Select=1 " Close the list when a item is selected  
-let Tlist_Use_SingleClick=1 "Go To Target By SingleClick  
-let Tlist_Use_Right_Window=1 "在右侧显示
 
 "omini补全设置
-let OmniCpp_NamespaceSearch = 2     " search namespaces in the current buffer   and in included files
-let OmniCpp_ShowPrototypeInAbbr = 1 " 显示函数参数列表
+let OmniCpp_NamespaceSearch     = 2 " search namespaces in the current buffer   and in included files
+let OmniCpp_ShowPrototypeInAbbr = 2 " 显示函数参数列表
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
+autocmd FileType html       set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css        set omnifunc=csscomplete#CompleteCSS
+autocmd FileType c          set omnifunc=ccomplete#Complete
 
+let g:ConqueGdb_Leader='['
 
-map <F6> :call RunGdb()<CR>  
-func! RunGdb()    
-        exec ":ConqueGdbVSplit php -d ."
-endfunc
-let g:ConqueGdb_Leader='.'
-
-"
-autocmd FileType c ClangFormatAutoEnable
-
-"supertab
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-
-set tags=tags
 if has("cscope")                                 
-    set csprg=/bin/cscope
+    set csprg=cscope
     set csto=0                               
     set cst                                  
     set nocsverb                             
@@ -189,17 +230,14 @@ nmap ,ff :cs find f <C-R><C-F><CR><CR> "查找egrep模式，相当于egrep功能
 nmap ,fi :cs find i <C-R><C-F><CR><CR> "查找并打开文件，类似vim的find功能
 nmap ,fd :cs find d <C-R><C-W><CR><CR> "查找包含本文件的文件
 
-"nmap ,r :!/data/src/pattern/install_module.sh<CR>
-nmap ,r :!cd /data/src/php/php-5.4.45/ext/test_file/ && phpize && ./configure && make && make install<CR>
-set tags=tags
-set tags+=~/.vim/systags
-set tags+=~/.vim/vimtags
+set tags  =tags
+set tags +=~/.vim/systags
+set tags +=~/.vim/vimtags
+
 let g:completekey='<C-L>'
 
 "indexer
-let g:indexer_ctagsCommandLineOptions="--c-kinds=+p --fields=+S"
-
-let g:syntastic_c_include_dirs=["/data/software/php/5.4.45_nts/include/php/main/","/data/software/php/5.4.45_nts/include/php/","/data/software/php/5.4.45_nts/include/php/Zend/","/data/software/php/5.4.45_nts/include/php/TSRM/","/data/software/php/5.4.45_nts/include/php/ext/","/data/software/php/5.4.45_nts/include/php/include/","/data/software/php/5.4.45_nts/include/php/sapi/","/data/src/code-instrument-php/SmartAgent/AgentCore/","/data/src/code-instrument-php/SmartAgent/AgentCore/include/"]
+let g:indexer_ctagsCommandLineOptions = "--c-kinds=+p --fields=+S"
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
@@ -208,8 +246,81 @@ let g:C_MapLeader=";"
 
 autocmd FileType php setlocal commentstring=//\ %s
 
+let g:EasyGrepRecursive       = 1
+let g:EasyGrepIgnoreCase      = 1
+let g:EasyGrepHidden          = 0
+let g:EasyGrepBinary          = 0
+let g:EasyGrepFilesToExclude  = ".git,.idea,cscope.*,tags,vendor"
+let g:EasyGrepWindow          = 0
+let g:EasyGrepJumpToMatch     = 1
+let g:EasyGrepInvertWholeWord = 1
+let g:EasyGrepPatternType     = 'fixed'
+let g:EasyGrepMode            = 2
+let g:EasyGrepCommand         = 1
 
-let g:phpqa_php_cmd='php'
-let g:phpqa_codesniffer_cmd='/data/phpcs/bin/phpcs'
-let g:phpqa_codesniffer_args = '--standard=Zend'
-let g:phpqa_messdetector_cmd='/data/phpmd'
+
+let g:bufferline_active_buffer_left  = '>'
+let g:bufferline_active_buffer_right = ''
+let g:bufferline_echo                = 0
+let g:bufferline_rotate              = 1
+let g:bufferline_fixed_index         = 1
+
+map <F2> :WMToggle<CR>
+let g:winManagerWindowLayout = 'NERDTree|TagList'
+let g:winManagerWidth        = 30
+let g:NERDTree_title         = "[NERDTree]"
+let g:AutoOpenWinManager = 1
+function! NERDTree_Start()
+    exec 'NERDTree'
+endfunction
+
+function! NERDTree_IsValid()
+    return 1
+endfunction
+
+let g:C_Styles = { '*.c,*.h,*.php' : 'C' }
+let g:DoxygenToolkit_commentType = "php"
+let g:DoxygenToolkit_authorName="bearzlh"
+let s:licenseTag = "Copyright(C)\<enter>"
+let s:licenseTag = s:licenseTag . "For free\<enter>"
+let s:licenseTag = s:licenseTag . "All right reserved\<enter>"
+let g:DoxygenToolkit_licenseTag = s:licenseTag
+let g:DoxygenToolkit_briefTag_funcName="yes"
+let g:doxygen_enhanced_color=1
+
+let g:DoxygenToolkit_briefTag_pre="@desc function  "
+let g:DoxygenToolkit_paramTag_pre="@params [type] "
+let g:DoxygenToolkit_returnTag="@return "
+let g:DoxygenToolkit_blockHeader=""
+let g:DoxygenToolkit_blockFooter=""
+let g:DoxygenToolkit_authorName="bearzlh"
+let g:DoxygenToolkit_licenseTag="License"
+
+autocmd FileType php        setlocal omnifunc=phpactor#Complete
+let g:phpactorPhpBin = '/usr/local/php7/bin/php'
+let g:phpactorBranch = 'master'
+let g:phpactorOmniError = v:true
+
+set viminfo='100,n~/.vim/files/info/viminfo
+
+let g:startify_session_autoload = 1
+let g:startify_lists = [
+            \ { 'header': ['   MRU'],            'type': 'files' },
+            \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
+            \ { 'header': ['   Sessions'],       'type': 'sessions' },
+            \ { 'header': [   'Commands'], 'type': 'commands'       },
+            \ ]
+
+let g:startify_commands = [
+            \ {'h': 'h ref'},
+            \ ]
+
+let g:startify_change_to_vcs_root = 1
+let g:startify_skiplist = [
+            \ '/Users/',
+            \ ]
+
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+colorscheme molokai
+
+let g:deoplete#enable_at_startup = 1
