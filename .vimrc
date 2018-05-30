@@ -20,7 +20,6 @@ set fileencoding=utf-8
 set autoread
 set cursorline
 set cursorcolumn
-colorscheme morning
 highlight CursorLine   cterm=NONE ctermbg=darkgrey ctermfg=white guibg=NONE guifg=NONE
 highlight CursorColumn cterm=NONE ctermbg=darkgrey ctermfg=white guibg=NONE guifg=NONE
 set noundofile
@@ -109,6 +108,7 @@ Plugin 'bling/vim-bufferline'
 Plugin 'majutsushi/tagbar'
 Plugin 'ddrscott/vim-window'
 Plugin 'tomasr/molokai'
+Plugin 'mattn/emmet-vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -264,6 +264,7 @@ map <F2> :WMToggle<CR>
 let g:winManagerWindowLayout = 'NERDTree|TagList'
 let g:winManagerWidth        = 30
 let g:NERDTree_title         = "[NERDTree]"
+let g:AutoOpenWinManager = 1
 function! NERDTree_Start()
     exec 'NERDTree'
 endfunction
