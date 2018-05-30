@@ -111,9 +111,6 @@ Plugin 'tomasr/molokai'
 Plugin 'mattn/emmet-vim'
 
 
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'roxma/nvim-yarp'
-Plugin 'roxma/vim-hug-neovim-rpc'
 
 call vundle#end()
 filetype plugin indent on
@@ -205,6 +202,7 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html       set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css        set omnifunc=csscomplete#CompleteCSS
 autocmd FileType c          set omnifunc=ccomplete#Complete
+au BufRead,BufNewFile *.ts set filetype=javascript
 
 let g:ConqueGdb_Leader='['
 
@@ -265,7 +263,7 @@ let g:bufferline_echo                = 0
 let g:bufferline_rotate              = 1
 let g:bufferline_fixed_index         = 1
 
-map <F2> :WMToggle<CR>
+nmap <silent> wm :if IsWinManagerVisible() <BAR> WMToggle<CR> <BAR> else <BAR> WMToggle<CR>:q<CR> endif <CR>
 let g:winManagerWindowLayout = 'NERDTree|TagList'
 let g:winManagerWidth        = 30
 let g:NERDTree_title         = "[NERDTree]"
@@ -277,24 +275,6 @@ endfunction
 function! NERDTree_IsValid()
     return 1
 endfunction
-
-let g:C_Styles = { '*.c,*.h,*.php' : 'C' }
-let g:DoxygenToolkit_commentType = "php"
-let g:DoxygenToolkit_authorName="bearzlh"
-let s:licenseTag = "Copyright(C)\<enter>"
-let s:licenseTag = s:licenseTag . "For free\<enter>"
-let s:licenseTag = s:licenseTag . "All right reserved\<enter>"
-let g:DoxygenToolkit_licenseTag = s:licenseTag
-let g:DoxygenToolkit_briefTag_funcName="yes"
-let g:doxygen_enhanced_color=1
-
-let g:DoxygenToolkit_briefTag_pre="@desc function  "
-let g:DoxygenToolkit_paramTag_pre="@params [type] "
-let g:DoxygenToolkit_returnTag="@return "
-let g:DoxygenToolkit_blockHeader=""
-let g:DoxygenToolkit_blockFooter=""
-let g:DoxygenToolkit_authorName="bearzlh"
-let g:DoxygenToolkit_licenseTag="License"
 
 autocmd FileType php        setlocal omnifunc=phpactor#Complete
 let g:phpactorPhpBin = '/usr/local/php7/bin/php'
@@ -322,5 +302,3 @@ let g:startify_skiplist = [
 
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 colorscheme molokai
-
-let g:deoplete#enable_at_startup = 1
