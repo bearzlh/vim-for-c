@@ -20,8 +20,9 @@ set fileencoding=utf-8
 set autoread
 set cursorline
 set cursorcolumn
-highlight CursorLine   cterm=NONE ctermbg=darkgrey ctermfg=white guibg=NONE guifg=NONE
-highlight CursorColumn cterm=NONE ctermbg=darkgrey ctermfg=white guibg=NONE guifg=NONE
+colorscheme evening
+highlight CursorLine   cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
+highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
 set noundofile
 set nobackup
 set noswapfile
@@ -103,12 +104,11 @@ Plugin 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
 Plugin 'wincent/ferret'
 
 Plugin 'mhinz/vim-startify'
-Plugin 'bling/vim-bufferline'
 
 Plugin 'majutsushi/tagbar'
-" Plugin 'ddrscott/vim-window'
 Plugin 'tomasr/molokai'
 Plugin 'mattn/emmet-vim'
+Plugin 'fholgado/minibufexpl.vim'
 
 
 
@@ -134,7 +134,9 @@ map <silent>,d <C-W>k
 map <silent>,f <C-W>l
 map <silent>,t <C-W>t
 map <silent>,b <C-W>b
-"命令行清行模式
+
+map <silent>;d :GitGutterPreviewHunk<CR>
+map <silent>;z :GitGutterUndoHunk<CR>
 
 "ctrlp
 let g:ctrlp_by_filename         = 1
@@ -151,15 +153,14 @@ let g:airline#extensions#ycm#enabled = 1
 let g:airline#extensions#ycm#error_symbol = 'E:'
 let g:airline#extensions#ycm#warning_symbol = 'W:'
 let g:airline#extensions#ale#enabled = 1
-let airline#extensions#ale#error_symbol = 'E:'
-let airline#extensions#ale#warning_symbol = 'W:'
+let g:airline#extensions#ale#error_symbol = 'E:'
+let g:airline#extensions#ale#warning_symbol = 'W:'
 
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#left_sep = '|'
-let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 let g:airline#extensions#fugitiveline#enabled = 1
@@ -204,7 +205,7 @@ autocmd FileType css        set omnifunc=csscomplete#CompleteCSS
 autocmd FileType c          set omnifunc=ccomplete#Complete
 au BufRead,BufNewFile *.ts set filetype=javascript
 
-let g:ConqueGdb_Leader='['
+let g:ConqueGdb_Leader='"'
 
 if has("cscope")                                 
     set csprg=cscope
@@ -302,3 +303,6 @@ let g:startify_skiplist = [
 
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 colorscheme molokai
+set t_Co=256
+highlight CursorLine   cterm=NONE ctermbg=242 ctermfg=204 guibg=NONE guifg=NONE
+highlight CursorColumn cterm=NONE ctermbg=242 ctermfg=204 guibg=NONE guifg=NONE
