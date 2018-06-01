@@ -306,3 +306,4 @@ colorscheme molokai
 set t_Co=256
 highlight CursorLine   cterm=NONE ctermbg=242 ctermfg=204 guibg=NONE guifg=NONE
 highlight CursorColumn cterm=NONE ctermbg=242 ctermfg=204 guibg=NONE guifg=NONE
+hi Visual ctermbg=242
