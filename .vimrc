@@ -110,6 +110,8 @@ Plugin 'tomasr/molokai'
 Plugin 'mattn/emmet-vim'
 Plugin 'fholgado/minibufexpl.vim'
 
+Plugin 'WolfgangMehner/bash-support'
+
 
 
 call vundle#end()
