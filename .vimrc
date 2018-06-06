@@ -73,7 +73,7 @@ Plugin 'vimscripts-fork/csupport'
 Plugin 'Valloric/YouCompleteMe'
 
 " syntaxt
-Plugin 'w0rp/ale'
+" Plugin 'w0rp/ale'
 
 " doc
 Plugin 'yianwillis/vimcdoc'
@@ -111,7 +111,9 @@ Plugin 'mattn/emmet-vim'
 Plugin 'fholgado/minibufexpl.vim'
 
 Plugin 'WolfgangMehner/bash-support'
-
+" Plugin 'vim-scripts/Gundo'
+Plugin 'sjl/gundo.vim'
+Plugin 'maksimr/vim-jsbeautify'
 
 
 call vundle#end()
@@ -119,7 +121,7 @@ filetype plugin indent on
 "" vundle end
 
 
-let mapleader = ';'
+let mapleader = ','
 "quickfix列表
 map <silent>,cn :cn<cr>
 map <silent>,cp :cp<cr>
@@ -172,17 +174,17 @@ let g:airline#extensions#quickfix#location_text = 'Location'
 let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#hunks#non_zero_only = 0
 let g:airline#extensions#hunks#hunk_symbols = ['+', '~', '-']
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <leader>- <Plug>AirlineSelectPrevTab
-nmap <leader>+ <Plug>AirlineSelectNextTab
+nmap ;1 <Plug>AirlineSelectTab1
+nmap ;2 <Plug>AirlineSelectTab2
+nmap ;3 <Plug>AirlineSelectTab3
+nmap ;4 <Plug>AirlineSelectTab4
+nmap ;5 <Plug>AirlineSelectTab5
+nmap ;6 <Plug>AirlineSelectTab6
+nmap ;7 <Plug>AirlineSelectTab7
+nmap ;8 <Plug>AirlineSelectTab8
+nmap ;9 <Plug>AirlineSelectTab9
+nmap ;- <Plug>AirlineSelectPrevTab
+nmap ;+ <Plug>AirlineSelectNextTab
 map ,1 :b 1<CR>
 map ,2 :b 2<CR>
 map ,3 :b 3<CR>
@@ -231,9 +233,24 @@ nmap ,ff :cs find f <C-R><C-F><CR><CR> "查找egrep模式，相当于egrep功能
 nmap ,fi :cs find i <C-R><C-F><CR><CR> "查找并打开文件，类似vim的find功能
 nmap ,fd :cs find d <C-R><C-W><CR><CR> "查找包含本文件的文件
 
+nmap cw viwc
+nmap cp vipc
+nmap cu d^i
+nmap ck d$a
+nmap nt :NERDTreeToggle<CR>
+nmap tb :TagbarToggle<CR>
+nmap cc :cclose<CR> :pclose<CR>
+nmap bo :MBEOpen<CR>
+nmap bfc :MBEClose<CR>
+nmap bfd :MBEbd<CR>
+nmap bfb :MBEbb<CR>
+nmap bff :MBEFocus<CR>
+nmap fld :CtrlPCurWD<CR>
+nmap ud :GundoToggle<CR>
+
 set tags  =tags
-set tags +=~/.vim/systags
-set tags +=~/.vim/vimtags
+"set tags +=~/.vim/systags
+"set tags +=~/.vim/vimtags
 
 let g:completekey='<C-L>'
 
@@ -242,7 +259,9 @@ let g:indexer_ctagsCommandLineOptions = "--c-kinds=+p --fields=+S"
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-let g:C_MapLeader=";"
+let g:C_MapLeader=';'
+let g:BASH_MapLeader=';'
+map ' <Plug>(easymotion-prefix)
 
 
 autocmd FileType php setlocal commentstring=//\ %s
@@ -303,9 +322,40 @@ let g:startify_skiplist = [
             \ '/Users/',
             \ ]
 
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 colorscheme molokai
 set t_Co=256
-highlight CursorLine   cterm=NONE ctermbg=242 ctermfg=204 guibg=NONE guifg=NONE
-highlight CursorColumn cterm=NONE ctermbg=242 ctermfg=204 guibg=NONE guifg=NONE
+highlight CursorLine   cterm=NONE ctermbg=242 ctermfg=231 guibg=NONE guifg=NONE
+highlight CursorColumn cterm=NONE ctermbg=242 ctermfg=231 guibg=NONE guifg=NONE
 hi Visual ctermbg=242
+
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_add_preview_to_completeopt = 1    " 关闭补全预览
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf = 0
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+" YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=1
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax=1
+
+" 错误标记
+let g:ycm_error_symbol = '✗'  "set error or warning signs
+
+" warning标记
+let g:ycm_warning_symbol = '⚠'
+let g:ycm_collect_identifiers_from_tag_files = 1
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_key_list_stop_completion = ['<C-y>']
+
+if has('python3')
+    let g:gundo_prefer_python3 = 1
+endif
