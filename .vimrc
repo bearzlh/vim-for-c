@@ -324,9 +324,9 @@ let g:startify_skiplist = [
 
 colorscheme molokai
 set t_Co=256
-highlight CursorLine   cterm=NONE ctermbg=242 ctermfg=231 guibg=NONE guifg=NONE
-highlight CursorColumn cterm=NONE ctermbg=242 ctermfg=231 guibg=NONE guifg=NONE
-hi Visual ctermbg=242
+highlight CursorLine   cterm=NONE ctermbg=30 ctermfg=255 guibg=NONE guifg=NONE
+highlight CursorColumn cterm=NONE ctermbg=30 ctermfg=255 guibg=NONE guifg=NONE
+hi Visual ctermbg=30
 
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_add_preview_to_completeopt = 1    " 关闭补全预览
