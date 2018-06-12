@@ -4,7 +4,7 @@ set hlsearch
 set shortmess=a
 set ic
 set ruler
-set mouse=a
+set mouse=i
 set nu
 set bg=dark
 syntax on
@@ -89,9 +89,9 @@ Plugin 'vim-scripts/Conque-GDB'
 Plugin 'joonty/vdebug'
 
 " tag file refresh
-Plugin 'vim-scripts/DfrankUtil'
-Plugin 'vim-scripts/vimprj'
-Plugin 'vim-scripts/indexer.tar.gz'
+"Plugin 'vim-scripts/DfrankUtil'
+"Plugin 'vim-scripts/vimprj'
+"Plugin 'vim-scripts/indexer.tar.gz'
 " tag jump
 Plugin 'cscope.vim'
 " tag pop
@@ -114,6 +114,9 @@ Plugin 'WolfgangMehner/bash-support'
 " Plugin 'vim-scripts/Gundo'
 Plugin 'sjl/gundo.vim'
 Plugin 'maksimr/vim-jsbeautify'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 
 
 call vundle#end()
@@ -237,16 +240,16 @@ nmap cw viwc
 nmap cp vipc
 nmap cu d^i
 nmap ck d$a
-nmap nt :NERDTreeToggle<CR>
-nmap tb :TagbarToggle<CR>
-nmap cc :cclose<CR> :pclose<CR>
-nmap bo :MBEOpen<CR>
-nmap bfc :MBEClose<CR>
-nmap bfd :MBEbd<CR>
-nmap bfb :MBEbb<CR>
-nmap bff :MBEFocus<CR>
-nmap fld :CtrlPCurWD<CR>
-nmap ud :GundoToggle<CR>
+nmap <silent>nt :NERDTreeToggle<CR>
+nmap <silent>tb :TagbarToggle<CR>
+nmap <silent>cc :cclose<CR> :pclose<CR>
+nmap <silent>bo :MBEOpen<CR>
+nmap <silent>bfc :MBEClose<CR>
+nmap <silent>bfd :MBEbd<CR>
+nmap <silent>bfb :MBEbb<CR>
+nmap <silent>bff :MBEFocus<CR>
+nmap <silent>fld :CtrlPCurWD<CR>
+nmap <silent>ud :GundoToggle<CR>
 
 set tags  =tags
 "set tags +=~/.vim/systags
@@ -326,7 +329,7 @@ colorscheme molokai
 set t_Co=256
 highlight CursorLine   cterm=NONE ctermbg=30 ctermfg=255 guibg=NONE guifg=NONE
 highlight CursorColumn cterm=NONE ctermbg=30 ctermfg=255 guibg=NONE guifg=NONE
-hi Visual ctermbg=30
+hi Visual ctermbg=0
 
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_add_preview_to_completeopt = 1    " 关闭补全预览
